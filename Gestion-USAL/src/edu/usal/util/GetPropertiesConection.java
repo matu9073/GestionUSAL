@@ -2,7 +2,9 @@ package edu.usal.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class GetPropertiesConection {
@@ -12,7 +14,8 @@ public class GetPropertiesConection {
 	
 	public GetPropertiesConection() throws FileNotFoundException, IOException {
 		Properties properties = new Properties();
-		properties.load(new FileInputStream("src/conection.properties"));
+		InputStream propertiesStream = ClassLoader.getSystemResourceAsStream("datos.properties");		
+		properties.load(propertiesStream);
 		this.userDB = properties.getProperty("userDB");
 		this.passDB = properties.getProperty("passDB");
 		System.out.println("userDB: " + this.userDB + " passDB: " + this.passDB);

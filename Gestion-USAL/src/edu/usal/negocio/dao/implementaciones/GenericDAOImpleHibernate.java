@@ -70,6 +70,82 @@ public class GenericDAOImpleHibernate<T, ID extends Serializable> implements Gen
 		 }
 		
 	}
+	
+	@Override
+	public void save(T entity) {
+		Session session = sessionFactory.getCurrentSession();
+		 try {
+		     session.beginTransaction();
+		     session.save(entity);
+		     session.getTransaction().commit();
+		 } catch (org.hibernate.exception.ConstraintViolationException cve) {
+		     try {
+		         if (session.getTransaction().isActive()) {
+		             session.getTransaction().rollback();
+		         }
+		     } catch (Exception exc) {
+		         System.out.println("Falló al hacer un rollback");
+		     }
+		     //throw new BussinessException(cve);
+		 } catch (RuntimeException ex) {
+		     try {
+		         if (session.getTransaction().isActive()) {
+		             session.getTransaction().rollback();
+		         }
+		     } catch (Exception exc) {
+		    	 System.out.println("Falló al hacer un rollback");
+		     }
+		     throw ex;
+		 } catch (Exception ex) {
+		     try {
+		         if (session.getTransaction().isActive()) {
+		             session.getTransaction().rollback();
+		         }
+		     } catch (Exception exc) {
+		    	 System.out.println("Falló al hacer un rollback");
+		     }
+		     throw new RuntimeException(ex);
+		 }
+		
+	}
+
+	@Override
+	public void update(T entity) {
+		Session session = sessionFactory.getCurrentSession();
+		 try {
+		     session.beginTransaction();
+		     session.update(entity);
+		     session.getTransaction().commit();
+		 } catch (org.hibernate.exception.ConstraintViolationException cve) {
+		     try {
+		         if (session.getTransaction().isActive()) {
+		             session.getTransaction().rollback();
+		         }
+		     } catch (Exception exc) {
+		         System.out.println("Falló al hacer un rollback");
+		     }
+		     //throw new BussinessException(cve);
+		 } catch (RuntimeException ex) {
+		     try {
+		         if (session.getTransaction().isActive()) {
+		             session.getTransaction().rollback();
+		         }
+		     } catch (Exception exc) {
+		    	 System.out.println("Falló al hacer un rollback");
+		     }
+		     throw ex;
+		 } catch (Exception ex) {
+		     try {
+		         if (session.getTransaction().isActive()) {
+		             session.getTransaction().rollback();
+		         }
+		     } catch (Exception exc) {
+		    	 System.out.println("Falló al hacer un rollback");
+		     }
+		     throw new RuntimeException(ex);
+		 }
+		
+	}
 
 	@Override
 	public T get(Serializable id) {
@@ -192,5 +268,4 @@ public class GenericDAOImpleHibernate<T, ID extends Serializable> implements Gen
 	private Class<T> getEntityClass() {
 	     return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
-
 }

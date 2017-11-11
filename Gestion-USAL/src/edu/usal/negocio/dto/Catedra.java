@@ -29,6 +29,8 @@ public class Catedra implements Serializable{
 	private String horario;
 	@Column(name="Dia_Cursada")
 	private String dia;
+	@Column(name="Turno_Cursada")
+	private String turno;
 	@ManyToMany(cascade=CascadeType.ALL, mappedBy="catedra")
 	List<Profesor> profesores;
 	
@@ -36,12 +38,13 @@ public class Catedra implements Serializable{
 		
 	}
 
-	public Catedra(int id, String nombre, int anio, String horario, String dia) {		
+	public Catedra(int id, String nombre, int anio, String horario, String dia, String turno) {		
 		this.id = id;
 		this.nombre = nombre;
 		this.anio = anio;
 		this.horario = horario;
 		this.dia = dia;
+		this.turno = turno;
 	}
 
 	public int getId() {
@@ -83,5 +86,21 @@ public class Catedra implements Serializable{
 	public void setDia(String dia) {
 		this.dia = dia;
 	}
+
+	public String getTurno() {
+		return turno;
+	}
+
+	public void setTurno(String turno) {
+		this.turno = turno;
+	}
+
+	public List<Profesor> getProfesores() {
+		return profesores;
+	}
+
+	public void setProfesores(List<Profesor> profesores) {
+		this.profesores = profesores;
+	}	
 	
 }
